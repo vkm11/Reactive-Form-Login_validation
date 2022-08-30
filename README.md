@@ -1,27 +1,57 @@
-# ReactiveForm
+# Simple Reactive Form
+## Without Validation
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.5.
+## app.component.html
 
-## Development server
+<h1>{{title}}</h1>
+<form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+  <label style="margin:10px;">
+    <input type="text" placeholder="Enter Name" name="user" formControlName="user" >
+  </label>
+  <label style="margin:10px;">
+    <input type="text" placeholder="Enter Password" name="password" formControlName="password" >
+  </label>
+  <button>Login</button>
+</form>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## app.component.ts
 
-## Code scaffolding
+import { Component } from '@angular/core';
+import {FormControl, FormControlName, FormGroup,} from "@angular/forms"
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'simple-reactive_form';
+  loginForm= new FormGroup({
+    user:new FormControl("vijay"),
+    password:new FormControl("123")
+  })
+  loginUser(){
+    console.log(this.loginForm.value);
+  }
+}
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## app.module.ts
 
-## Build
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { ReactiveFormsModule } from '@angular/forms';
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
